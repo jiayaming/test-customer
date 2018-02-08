@@ -1,0 +1,90 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+  	  <groupId>com.jiayaming.dubbo</groupId>
+  	  <artifactId>test-parent</artifactId>
+  	  <version>0.0.1-SNAPSHOT</version>
+  	  <relativePath>../test-parent/pom.xml</relativePath>
+  </parent>
+  <artifactId>test-customer</artifactId>
+  <packaging>war</packaging>
+  <name>test-customer Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+      <dependency>
+	      <groupId>com.jiayaming.dubbo</groupId>
+	      <artifactId>test-customer-api</artifactId>
+	      <version>0.0.1-SNAPSHOT</version>
+	  </dependency>
+	  <dependency>
+	      <groupId>com.jiayaming.dubbo</groupId>
+	      <artifactId>test-sdk</artifactId>
+	      <version>0.0.1-SNAPSHOT</version>
+	  </dependency>
+  </dependencies>
+  <build>
+    <finalName>test-customer</finalName>
+    <sourceDirectory>src/main/java</sourceDirectory>
+      <resources>
+      	  <resource>
+      	  	  <directory>src/main/resources</directory>
+      	  	  <filtering>true</filtering><!--resources中的文件允许用profile中定义的替换-->
+      	  </resource>
+      </resources>
+      <plugins>
+		  <!--
+		       
+		      1： 指定maven插件编译版本，maven 3.x 貌似是默认用jdk 1.5。 
+		      2：windows默认使用GBK编码，java项目经常编码为utf8，也需要在compiler插件中指出，否则中文乱码可能会出现编译错误。 
+		   -->
+		  <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-compiler-plugin</artifactId>
+		        <version>3.3</version>
+		        <configuration>
+		            <source>1.8</source><!-- 指定Java版本1.8 -->   
+		            <target>1.8</target><!-- 指定 JVM版本 1.8 -->
+		        </configuration>
+		  </plugin>
+	  </plugins>
+  </build>
+   <profiles>
+  	  <profile>
+  	      <id>develop</id>
+  	      <activation>
+  	          <activeByDefault>true</activeByDefault>
+  	      </activation>
+  	      <properties>
+  	      	  <jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
+			  <jdbc.url>jdbc:mysql://192.168.26.128:3306/saastest?zeroDateTimeBehavior=convertToNull</jdbc.url>
+			  <jdbc.username>root</jdbc.username>
+			  <jdbc.password>Pass12345</jdbc.password>
+			  <dubbo.port>20881</dubbo.port>
+  	          <zookeeper>zookeeper://10.130.201.47:2181?backup=10.130.201.48:2181,10.130.201.49:2181</zookeeper>
+  	      </properties>
+  	  </profile>
+  	  <profile>
+  	      <id>test</id>
+  	      <properties>
+  	      	  <jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
+			  <jdbc.url>jdbc:mysql://192.168.26.128:3306/saastest?zeroDateTimeBehavior=convertToNull</jdbc.url>
+			  <jdbc.username>root</jdbc.username>
+			  <jdbc.password>Pass12345</jdbc.password>
+			  <dubbo.port>20881</dubbo.port>
+  	          <zookeeper>zookeeper://10.130.201.47:2181?backup=10.130.201.48:2181,10.130.201.49:2181</zookeeper>
+  	      </properties>
+  	  </profile>
+  	  <profile>
+  	      <id>product</id>
+  	      <properties>
+  	      	  <jdbc.driver>com.mysql.jdbc.Driver</jdbc.driver>
+			  <jdbc.url>jdbc:mysql://192.168.26.128:3306/saastest?zeroDateTimeBehavior=convertToNull</jdbc.url>
+			  <jdbc.username>root</jdbc.username>
+			  <jdbc.password>Pass12345</jdbc.password>
+			  <dubbo.port>20881</dubbo.port>
+  	          <zookeeper>zookeeper://10.130.201.47:2181?backup=10.130.201.48:2181,10.130.201.49:2181</zookeeper>
+  	      </properties>
+  	  </profile>
+  </profiles>
+</project>
