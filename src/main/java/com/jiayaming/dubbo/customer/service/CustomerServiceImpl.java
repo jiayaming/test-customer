@@ -111,7 +111,7 @@ public class CustomerServiceImpl implements CustomerService {
 		int length = 4;
 		String base="aaaaaaaaaaaaaaaaaaaaaaaaa";
 		for (int i = 0; i < length; i++) {
-			int start = random.nextInt(randomCode.length());
+			int start = random.nextInt(base.length());
 			String strRand = base.substring(start,start+1);
 			//用随机产生的颜色将字符绘制到图片中
 			//产生随机颜色
@@ -136,7 +136,7 @@ public class CustomerServiceImpl implements CustomerService {
 		Map<String,Object> map = new HashMap<>();
 		map.put("validateCodePicture", validateCodePicture);
 		map.put("validateCode", randomCode.toString());
-		return null;
+		return map;
 	}
 
 }
