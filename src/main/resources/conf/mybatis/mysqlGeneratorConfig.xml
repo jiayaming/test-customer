@@ -18,7 +18,7 @@
 		<javaClientGenerator targetPackage="com.jiayaming.dubbo.customer.dao" targetProject="test-customer/src/main/java" type="XMLMAPPER">
 			<property name="enableSubPackages" value="true"/>
 		</javaClientGenerator>
-		<table tableName="test01" domainObjectName="Test01"
+		<table tableName="customer_info" domainObjectName="CustomerInfo"
     		enableCountByExample="false" enableUpdateByExample="false"
     		enableSelectByExample="false" enableDeleteByExample="false"
     		selectByExampleQueryId="false">
