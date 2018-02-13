@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -53,18 +54,18 @@ public class CustomerServiceImpl implements CustomerService {
 		//如果参数对象为空,就不做查询
 		if (param.get("customerLoginName")==null || param.get("customerLoginName").toString().equals("")) {
 			returnMap.put("state", "failed");
-	    	returnMap.put("message", "请输入用户登陆信息");
+	    	returnMap.put("message", "亲，请输入您的登陆信息哦。");
 			return returnMap;
 		}
 		if (param.get("password")==null || param.get("password").toString().equals("")) {
 			returnMap.put("state", "failed");
-	    	returnMap.put("message", "请输入用户登陆信息");
+	    	returnMap.put("message", "亲，请输入您的登陆信息哦。");
 			return returnMap;
 		}
 		//校验密码是否是以字母和数字组成的6到16位字符串
 		if(!PatternUtil.isPassword(param.get("password").toString())){
 	    	returnMap.put("state", "failed");
-	    	returnMap.put("message", "请输入正确的密码信息");
+	    	returnMap.put("message", "亲，请输入您正确的密码信息哦。");
 			return returnMap;
 		}
 		
@@ -84,7 +85,7 @@ public class CustomerServiceImpl implements CustomerService {
 			customerLoginInfo.put("mobile", customerLoginName);
 		}else{
 			returnMap.put("state", "failed");
-	    	returnMap.put("message", "请输入正确的用户信息");
+	    	returnMap.put("message", "亲，请输入您正确的登录信息哦。");
 			return returnMap;
 		}
 		
@@ -92,11 +93,11 @@ public class CustomerServiceImpl implements CustomerService {
 	    if(customerInfo != null) {
 	    	returnMap =  BeanUtil.beanToMap(customerInfo);
 	    	returnMap.put("state", "successe");
-	    	returnMap.put("message", "用户信息验证成功");
+	    	returnMap.put("message", "亲，您的信息已经验证通过，请开始尽情的玩耍吧！");
 	    	return returnMap;
 	    }else {
 	    	returnMap.put("state", "failed");
-	    	returnMap.put("message", "没有用户信息");
+	    	returnMap.put("message", "亲，系统没有找到您的信息，请先确认账号和密码是否正确。");
 	    	return returnMap;
 	    }
 	}
@@ -159,6 +160,35 @@ public class CustomerServiceImpl implements CustomerService {
 		map.put("validateCodePicture", validateCodePicture);
 		map.put("validateCode", randomCode.toString());
 		return map;
+	}
+	@Override
+	public Map<String, Object> saveRegisterInfo(Map<String, Object> map) throws Exception {
+		Map<String, Object> returnMap = new HashMap<>();
+		
+		String username = map.get("username").toString();
+		String password = map.get("password").toString();
+		String uuid = UUID.randomUUID().toString();
+		Date date = new Date();
+		
+		Map<String, Object> selectMap = new HashMap<>();
+		selectMap.put("email", username);
+		CustomerInfo selectCustomerInfo =  customerInfoMapper.selectCustomerByMap(selectMap);
+		if(selectCustomerInfo != null) {
+			returnMap.put("state", 0);
+			returnMap.put("message", "您的账号已经注册");
+			return returnMap;
+		}
+		CustomerInfo customerInfo = new CustomerInfo();
+		customerInfo.setEmail(username);
+		customerInfo.setPassword(MD5Util.MD5Encode(password));
+		customerInfo.setUuid(uuid);
+		customerInfo.setUpdateTime(date);
+		customerInfo.setCreateTime(date);
+		customerInfoMapper.insertSelective(customerInfo);
+		
+		
+		returnMap.put("state", 1);
+		return returnMap;
 	}
 
 }
