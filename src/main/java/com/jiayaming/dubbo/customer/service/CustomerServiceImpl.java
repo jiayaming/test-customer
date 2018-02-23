@@ -182,6 +182,7 @@ public class CustomerServiceImpl implements CustomerService {
 		customerInfo.setEmail(username);
 		customerInfo.setPassword(MD5Util.MD5Encode(password));
 		customerInfo.setUuid(uuid);
+		customerInfo.setCustomerType("0");//刚注册时是普通用户
 		customerInfo.setUpdateTime(date);
 		customerInfo.setCreateTime(date);
 		customerInfoMapper.insertSelective(customerInfo);
