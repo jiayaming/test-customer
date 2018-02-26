@@ -43,4 +43,6 @@ public interface CustomerInfoMapper {
 	int updateByPrimaryKey(CustomerInfo record);
 
 	CustomerInfo selectCustomerByMap(Map<String,Object> map);
+	
+	int updateByUuid(Map<String,Object> map);
 }

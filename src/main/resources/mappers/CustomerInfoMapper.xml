@@ -307,4 +307,35 @@
       and name = #{name,jdbcType=VARCHAR}
     </if>
   </select>
+  
+  <update id="updateByUuid" parameterType="map">
+    update customer_info
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="solarOrLunar != null">
+        solar_or_lunar = #{solarOrLunar,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="birthdayTime != null">
+        birthday_time = #{birthdayTime,jdbcType=VARCHAR},
+      </if>
+      <if test="adressProvince != null">
+        adress_province = #{adressProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="adressCity != null">
+        adress_city = #{adressCity,jdbcType=VARCHAR},
+      </if>
+      <if test="adressCounty != null">
+        adress_county = #{adressCounty,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=VARCHAR}
+  </update>
 </mapper>

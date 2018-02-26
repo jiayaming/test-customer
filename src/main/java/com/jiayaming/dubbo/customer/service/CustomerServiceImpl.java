@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -193,6 +194,11 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		returnMap.put("state", 1);
 		return returnMap;
+	}
+	@Override
+	public int saveCustomerInfo(Map<String, Object> map) throws Exception {
+
+		return customerInfoMapper.updateByUuid(map);
 	}
 
 }
