@@ -91,6 +91,9 @@ public class CustomerServiceImpl implements CustomerService {
 		
 	    CustomerInfo customerInfo= customerInfoMapper.selectCustomerByMap(customerLoginInfo);
 	    if(customerInfo != null) {
+	    	Date date = new Date();
+	    	customerInfo.setLastLoginDate(date);
+	    	customerInfoMapper.updateByPrimaryKeySelective(customerInfo);
 	    	returnMap =  BeanUtil.beanToMap(customerInfo);
 	    	returnMap.put("state", "successe");
 	    	returnMap.put("message", "亲，您的信息已经验证通过，请开始尽情的玩耍吧！");
